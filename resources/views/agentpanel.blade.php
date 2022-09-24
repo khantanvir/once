@@ -10,23 +10,34 @@
     <meta name="keywords" content="Colorlib Templates">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 	<title>{{ (!empty($page_title))?$page_title:'' }}</title>
-    <link href="{{ asset('frontend/agent/vendor/mdi-font/css/material-design-iconic-font.min.css ') }}" rel="stylesheet" media="all">
-    <link href="{{ asset('frontend/agent/vendor/font-awesome-4.7/css/font-awesome.min.css ') }}" rel="stylesheet" media="all">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="{{ asset('frontend/agent/vendor/select2/select2.min.css ') }}" rel="stylesheet" media="all">
-    <link href="{{ asset('frontend/agent/vendor/datepicker/daterangepicker.css ') }}" rel="stylesheet" media="all">
-    <link href="{{ asset('frontend/agent/css/main.css ') }}" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.2.0/css/bootstrap-colorpicker.css" rel="stylesheet">
+    <style>
+		body{
+			background-color: #09919f !important;
+		}
+		.custom-main{
+			background-color: #e2eaeb;
+			margin-top: 50px;
+			padding: 20px;
+		}
+	</style>
+	
 </head>
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+    <div class="custom-main container">
         @yield('agent')
     </div>
-    <script src="{{ asset('frontend/agent/vendor/jquery/jquery.min.js ') }}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.2.0/js/bootstrap-colorpicker.js"></script>
+
     <script src="{{ asset('frontend/agent/vendor/select2/select2.min.js ') }}"></script>
     <script src="{{ asset('frontend/agent/vendor/datepicker/moment.min.js ') }}"></script>
     <script src="{{ asset('frontend/agent/vendor/datepicker/daterangepicker.js ') }}"></script>
-    <script src="{{ asset('frontend/agent/js/global.js ') }}"></script>
-    <!--<script src="{{ asset('backend/js/styleSwitcher.js ') }}"></script>-->
+	
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
@@ -104,5 +115,30 @@
 				});
             });
         </script>
+		<script>
+			function get_branch_by_country(){
+				var country_name = $('#country').val();
+				$.get("{{ URL::to('get-branch-by-country') }}/"+country_name,function(data,status){
+					console.log(data);
+					//$("#branch_id").html(data['result']['val']);
+					if(data['result']['key']===101){
+						alert(data['result']['val']);
+					}
+					if(data['result']['key']===200){
+						$('#branch_id').html(data['result']['val']);
+					}
+				});
+			}
+		</script>
+		<script type="text/javascript">
+			$(function () {
+			  $('#color')
+			  .colorpicker({})
+			  .on('colorpickerChange', function (e) { //change the bacground color of the main when the color changes  
+				  new_color = e.color.toString()
+				  $('#main').css('background-color', new_color)
+			  })     
+		  });
+	  </script>
 </body>
 </html>

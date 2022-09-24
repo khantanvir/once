@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Agent\AgentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,10 @@ Route::get('/', function () {
 //Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('agent/invitation/{code?}/{branch_name?}/{branch_id?}', [App\Http\Controllers\Agent\AgentController::class, 'become_new_agent']);
+//Route::get('agent/invitation/{code?}/{branch_name?}/{branch_id?}', [App\Http\Controllers\Agent\AgentController::class, 'become_new_agent']);
+
+Route::controller(AgentController::class)->group(function() {
+    Route::get('agent/invitation/{code?}/{branch_name?}/{branch_id?}','become_new_agent');
+    Route::get('get-branch-by-country/{id?}','get_branch_by_country');
+    Route::post('become-new-agent-post','become_new_agent_post');
+});

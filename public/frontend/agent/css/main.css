@@ -9,6 +9,9 @@
 .font-poppins {
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
+.custom-main{
+  width: 88%;
+}
 
 /* ==========================================================================
    #GRID
@@ -240,7 +243,7 @@ h6 {
 }
 
 .wrapper--w680 {
-  max-width: 680px;
+  max-width: 960px;
 }
 
 /* ==========================================================================
