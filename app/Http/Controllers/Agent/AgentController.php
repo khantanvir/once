@@ -49,7 +49,8 @@ class AgentController extends Controller
     }
     //post become agent data 
     public function become_new_agent_post(BecomeAgentRequest $request){
-        $response = Http::post(env('API_DATA_HOST').'became-an-agent', [
+        $response = Http::attach('company_trade_license',file_get_contents($request->file('company_trade_license')->getRealPath()),$request->file('company_trade_license')->getClientOriginalName())->post(env('API_DATA_HOST').'became-an-agent', [
+            'branch_id' => $request->branch_id,
             'agent_name' => $request->agent_name,
             'agent_email' => $request->agent_email,
             'agent_phone' => $request->agent_phone,
@@ -61,10 +62,10 @@ class AgentController extends Controller
             'nid_or_passport' => $request->nid_or_passport,
             'nationality' => $request->nationality,
             'agent_bg_color' => $request->agent_bg_color,
-            'logo' => $request->logo,
+            //'logo' => $request->file('logo'),
             'company_name' => $request->company_name,
             'company_registration_number' => $request->company_registration_number,
-            'company_trade_license' => $request->company_trade_license,
+            //'company_trade_license' => $request->file('company_trade_license'),
             'company_trade_license_number' => $request->company_trade_license_number,
             'company_establish_date' => $request->company_establish_date,
             'company_number_of_employee' => $request->company_number_of_employee,
@@ -75,6 +76,8 @@ class AgentController extends Controller
             'company_city' => $request->company_city,
             'company_state' => $request->company_state,
             'company_country' => $request->company_country,
-        ]);
+        ])->body();
+        //$response = Http::post(env('API_DATA_HOST').'became-an-agent');
+        return response()->json($response);
     }
 }
